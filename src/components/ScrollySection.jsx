@@ -87,11 +87,12 @@ function ScrollySection({ scrollProgress }) {
     }, [currentFrame])
 
     // Calculate which brand to show (0-2)
+    // Frame 25 is a transition frame with no overlay
     const currentBrand = useMemo(() => {
-        if (currentFrame < 25) return -1
-        if (currentFrame < 28) return 0
-        if (currentFrame < 31) return 1
-        if (currentFrame < 34) return 2
+        if (currentFrame < 26) return -1
+        if (currentFrame < 29) return 0
+        if (currentFrame < 32) return 1
+        if (currentFrame < 35) return 2
         return 3
     }, [currentFrame])
 
