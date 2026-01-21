@@ -50,11 +50,28 @@ function ScrollySection({ scrollProgress }) {
 
     // Calculate current frame based on scroll progress
     const currentFrame = useMemo(() => {
-        const frameIndex = Math.min(
-            Math.floor(scrollProgress * TOTAL_FRAMES),
+        let frameIndex = 0
+
+        // Total frames = 40
+        // 0-25: Competition (25 frames) -> alloc 30% scroll (0.0 - 0.3)
+        // 25-35: Companies (10 frames) -> alloc 60% scroll (0.3 - 0.9) - SUPER SLOW
+        // 35-39: Hero (5 frames) -> alloc 10% scroll (0.9 - 1.0)
+
+        if (scrollProgress < 0.3) {
+            // Range 0 to 0.3 maps to 0 to 25
+            frameIndex = (scrollProgress / 0.3) * 25
+        } else if (scrollProgress < 0.9) {
+            // Range 0.3 to 0.9 maps to 25 to 35
+            frameIndex = 25 + ((scrollProgress - 0.3) / 0.6) * 10
+        } else {
+            // Range 0.9 to 1.0 maps to 35 to 40
+            frameIndex = 35 + ((scrollProgress - 0.9) / 0.1) * 5
+        }
+
+        return Math.min(
+            Math.floor(frameIndex),
             TOTAL_FRAMES - 1
         )
-        return Math.max(0, frameIndex)
     }, [scrollProgress])
 
     // Determine which phase we're in
@@ -71,10 +88,10 @@ function ScrollySection({ scrollProgress }) {
 
     // Calculate which brand to show (0-2)
     const currentBrand = useMemo(() => {
-        if (currentFrame < 26) return -1
-        if (currentFrame < 29) return 0
-        if (currentFrame < 32) return 1
-        if (currentFrame < 35) return 2
+        if (currentFrame < 25) return -1
+        if (currentFrame < 28) return 0
+        if (currentFrame < 31) return 1
+        if (currentFrame < 34) return 2
         return 3
     }, [currentFrame])
 
