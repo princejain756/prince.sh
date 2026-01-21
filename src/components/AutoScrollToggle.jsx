@@ -14,7 +14,13 @@ function AutoScrollToggle({ enabled, onToggle }) {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            exit={{
+                opacity: 0,
+                scale: 0.5,
+                filter: 'blur(10px)',
+                transition: { duration: 0.5, ease: 'easeOut' }
+            }}
             transition={{ delay: 0.5 }}
             title={enabled ? "Stop Auto-Scroll" : "Start Auto-Scroll"}
         >

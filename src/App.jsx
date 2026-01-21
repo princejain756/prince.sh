@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import ScrollySection from './components/ScrollySection'
 import AutoScrollToggle from './components/AutoScrollToggle'
 import Lenis from 'lenis'
@@ -88,10 +89,14 @@ function App() {
   return (
     <>
       <ScrollySection scrollProgress={scrollProgress} />
-      <AutoScrollToggle
-        enabled={autoScrollEnabled}
-        onToggle={handleAutoScrollToggle}
-      />
+      <AnimatePresence>
+        {scrollProgress < 0.9 && (
+          <AutoScrollToggle
+            enabled={autoScrollEnabled}
+            onToggle={handleAutoScrollToggle}
+          />
+        )}
+      </AnimatePresence>
       {scrollProgress < 0.1 && !autoScrollEnabled && (
         <div className="scroll-indicator">
           <div className="mouse">
