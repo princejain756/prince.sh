@@ -57,7 +57,7 @@ html.lenis body {
 /* Scrolly Section */
 .scrolly-container {
   position: relative;
-  height: 1000vh;
+  height: 800vh;
   /* Increased for slower scroll, more time to read brands */
 }
 

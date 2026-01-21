@@ -1,7 +1,8 @@
-import { useMemo, useEffect, useRef, useState } from 'react'
+import { useMemo, useEffect, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import HeroSection from './HeroSection'
 import PortfolioBrands from './PortfolioBrands'
+import ContactButton from './ContactButton'
 
 // Total number of frames
 const TOTAL_FRAMES = 41
@@ -88,70 +89,75 @@ function ScrollySection({ scrollProgress }) {
 
     // Calculate which brand to show (0-2)
     const currentBrand = useMemo(() => {
-        if (currentFrame < 26) return -1
-        if (currentFrame < 29) return 0
-        if (currentFrame < 32) return 1
-        if (currentFrame < 35) return 2
+        if (currentFrame < 25) return -1
+        if (currentFrame < 28) return 0  // adelev8
+        if (currentFrame < 31) return 1  // Maninfini
+        if (currentFrame < 35) return 2  // sarojjain
         return 3
     }, [currentFrame])
 
-    // Canvas drawing logic
+    // Keep track of current frame in ref for resize handler
+    const currentFrameRef = useRef(0)
     useEffect(() => {
+        currentFrameRef.current = currentFrame
+    }, [currentFrame])
+
+    // Canvas drawing logic
+    const render = useCallback(() => {
         const canvas = canvasRef.current
         if (!canvas || !imagesLoaded) return
 
         const ctx = canvas.getContext('2d')
-        const img = imagesRef.current[currentFrame]
+        const img = imagesRef.current[currentFrameRef.current]
 
         if (!img) return
 
-        // Handle high-DPI displays
         const dpr = window.devicePixelRatio || 1
+        const rect = canvas.getBoundingClientRect()
 
-        const render = () => {
-            // Set canvas size to match display size
-            const rect = canvas.getBoundingClientRect()
-            canvas.width = rect.width * dpr
-            canvas.height = rect.height * dpr
+        // Check if canvas needs resize to avoid clearing unnecessarily if size hasn't changed
+        // But for a robust "cover" implementation that handles dpr changes, we reset usually.
+        // To avoid flickering, we can check dimensions but setting width/height clears canvas anyway.
 
-            // Normalize coordinate system
-            ctx.scale(dpr, dpr)
+        canvas.width = rect.width * dpr
+        canvas.height = rect.height * dpr
 
-            // Draw image "cover" style
-            const canvasWidth = rect.width
-            const canvasHeight = rect.height
-            const imgRatio = img.width / img.height
-            const canvasRatio = canvasWidth / canvasHeight
+        ctx.scale(dpr, dpr)
 
-            let drawWidth, drawHeight, offsetX, offsetY
+        const canvasWidth = rect.width
+        const canvasHeight = rect.height
+        const imgRatio = img.width / img.height
+        const canvasRatio = canvasWidth / canvasHeight
 
-            if (canvasRatio > imgRatio) {
-                drawWidth = canvasWidth
-                drawHeight = canvasWidth / imgRatio
-                offsetX = 0
-                offsetY = (canvasHeight - drawHeight) / 2
-            } else {
-                drawWidth = canvasHeight * imgRatio
-                drawHeight = canvasHeight
-                offsetX = (canvasWidth - drawWidth) / 2
-                offsetY = 0
-            }
+        let drawWidth, drawHeight, offsetX, offsetY
 
-            // Clear and draw
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-            ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight)
+        if (canvasRatio > imgRatio) {
+            drawWidth = canvasWidth
+            drawHeight = canvasWidth / imgRatio
+            offsetX = 0
+            offsetY = (canvasHeight - drawHeight) / 2
+        } else {
+            drawWidth = canvasHeight * imgRatio
+            drawHeight = canvasHeight
+            offsetX = (canvasWidth - drawWidth) / 2
+            offsetY = 0
         }
 
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight)
+    }, [imagesLoaded])
+
+    // Render when frame changes
+    useEffect(() => {
         render()
+    }, [currentFrame, render])
 
-        // Handle resize
-        const handleResize = () => {
-            requestAnimationFrame(render)
-        }
-
+    // Handle resize
+    useEffect(() => {
+        const handleResize = () => requestAnimationFrame(render)
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
-    }, [currentFrame, imagesLoaded])
+    }, [render])
 
     // Play sound only when first company appears
     useEffect(() => {
