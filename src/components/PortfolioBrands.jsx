@@ -4,16 +4,25 @@ const brands = [
     {
         name: 'adelev8',
         logo: '/adelev8.png',
+        logoWidth: 1221,
+        logoHeight: 331,
+        alt: 'adelev8 logo',
         description: "Performance‑driven marketing agency scaling startups and SMEs using SEO, PPC, and data-driven growth strategies."
     },
     {
         name: 'Maninfini',
-        logo: '/maninfini.png',
+        logo: '/maninfini.webp',
+        logoWidth: 1220,
+        logoHeight: 572,
+        alt: 'Maninfini logo',
         description: "Business automation and digital solutions company providing website development and tech‑driven operational scaling."
     },
     {
         name: 'sarojjain',
         logo: '/sarojjain.png',
+        logoWidth: 360,
+        logoHeight: 79,
+        alt: 'Saroj Jain logo',
         description: "Ethnic fashion label blending traditional Indian craftsmanship with contemporary silhouettes for modern celebrations."
     },
 ]
@@ -38,8 +47,11 @@ function PortfolioBrands({ currentBrand }) {
                     <div className="brand-header">
                         <img
                             src={brand.logo}
-                            alt={`${brand.name} logo`}
+                            alt={brand.alt}
+                            width={brand.logoWidth}
+                            height={brand.logoHeight}
                             className="brand-logo-large"
+                            decoding="async"
                         />
                         <span className="brand-name-large">
                             {brand.name}

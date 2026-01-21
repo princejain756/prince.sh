@@ -144,15 +144,15 @@ function HeroSection() {
                 transition={{ delay: 0.5, duration: 0.5 }}
             >
                 <a href="https://adelev8.com" target="_blank" rel="noopener noreferrer" className="footer-brand-link">
-                    <img src="/adelev8.png" alt="adelev8" className="footer-brand-logo" />
+                    <img src="/adelev8.png" alt="adelev8 logo" width="1221" height="331" className="footer-brand-logo" decoding="async" />
                     <span>adelev8</span>
                 </a>
                 <a href="https://maninfini.com" target="_blank" rel="noopener noreferrer" className="footer-brand-link">
-                    <img src="/maninfini.png" alt="maninfini" className="footer-brand-logo" />
+                    <img src="/maninfini.webp" alt="Maninfini logo" width="1220" height="572" className="footer-brand-logo" decoding="async" />
                     <span>maninfini.com</span>
                 </a>
                 <a href="https://sarojjain.com" target="_blank" rel="noopener noreferrer" className="footer-brand-link">
-                    <img src="/sarojjain.png" alt="sarojjain" className="footer-brand-logo" />
+                    <img src="/sarojjain.png" alt="Saroj Jain logo" width="360" height="79" className="footer-brand-logo" decoding="async" />
                     <span>sarojjain.com</span>
                 </a>
             </motion.div>

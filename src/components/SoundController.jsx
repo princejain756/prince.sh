@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 
-function SoundController({ scrollProgress, enabled, onToggle }) {
+function SoundController({ enabled, onToggle }) {
     const audioRef = useRef(null)
     const [isReady, setIsReady] = useState(false)
 

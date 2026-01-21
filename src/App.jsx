@@ -50,7 +50,6 @@ function App() {
     <>
       <ScrollySection scrollProgress={scrollProgress} />
       <SoundController 
-        scrollProgress={scrollProgress} 
         enabled={soundEnabled}
         onToggle={() => setSoundEnabled(!soundEnabled)}
       />
