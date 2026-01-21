@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { playClickSound } from '../utils/sounds'
 
 function HeroSection() {
     const [showContactMenu, setShowContactMenu] = useState(false)
@@ -43,6 +44,7 @@ function HeroSection() {
                         <button
                             className="btn-primary"
                             onClick={() => {
+                                playClickSound()
                                 setShowContactMenu(!showContactMenu)
                                 setShowWebsiteMenu(false)
                             }}
@@ -91,6 +93,7 @@ function HeroSection() {
                         <button
                             className="btn-secondary"
                             onClick={() => {
+                                playClickSound()
                                 setShowWebsiteMenu(!showWebsiteMenu)
                                 setShowContactMenu(false)
                             }}

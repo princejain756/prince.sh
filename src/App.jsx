@@ -1,13 +1,14 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import ScrollySection from './components/ScrollySection'
-import SoundController from './components/SoundController'
+import AutoScrollToggle from './components/AutoScrollToggle'
 import Lenis from 'lenis'
 import './App.css'
 
 function App() {
   const [scrollProgress, setScrollProgress] = useState(0)
-  const [soundEnabled, setSoundEnabled] = useState(false)
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState(false)
   const lenisRef = useRef(null)
+  const autoScrollRef = useRef(null)
 
   useEffect(() => {
     // Initialize Lenis smooth scrolling
@@ -46,14 +47,52 @@ function App() {
     }
   }, [])
 
+  // Auto-scroll functionality using Lenis for smooth scrolling
+  useEffect(() => {
+    if (autoScrollEnabled && lenisRef.current) {
+      const scrollSpeed = 3 // pixels per frame (faster)
+
+      const autoScroll = () => {
+        const currentScroll = window.scrollY
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+
+        if (currentScroll < maxScroll - 10) {
+          // Use Lenis's scroll method for smoothness
+          lenisRef.current.scrollTo(currentScroll + scrollSpeed, { immediate: true })
+          autoScrollRef.current = requestAnimationFrame(autoScroll)
+        } else {
+          // Reached the end, disable auto-scroll
+          setAutoScrollEnabled(false)
+        }
+      }
+
+      autoScrollRef.current = requestAnimationFrame(autoScroll)
+    } else {
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current)
+        autoScrollRef.current = null
+      }
+    }
+
+    return () => {
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current)
+      }
+    }
+  }, [autoScrollEnabled])
+
+  const handleAutoScrollToggle = useCallback(() => {
+    setAutoScrollEnabled(prev => !prev)
+  }, [])
+
   return (
     <>
       <ScrollySection scrollProgress={scrollProgress} />
-      <SoundController 
-        enabled={soundEnabled}
-        onToggle={() => setSoundEnabled(!soundEnabled)}
+      <AutoScrollToggle
+        enabled={autoScrollEnabled}
+        onToggle={handleAutoScrollToggle}
       />
-      {scrollProgress < 0.1 && (
+      {scrollProgress < 0.1 && !autoScrollEnabled && (
         <div className="scroll-indicator">
           <div className="mouse">
             <div className="wheel"></div>
