@@ -4,7 +4,7 @@ import HeroSection from './HeroSection'
 import PortfolioBrands from './PortfolioBrands'
 
 // Total number of frames
-const TOTAL_FRAMES = 40
+const TOTAL_FRAMES = 41
 
 // Preload all frame paths
 const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
@@ -52,20 +52,20 @@ function ScrollySection({ scrollProgress }) {
     const currentFrame = useMemo(() => {
         let frameIndex = 0
 
-        // Total frames = 40
-        // 0-25: Competition (25 frames) -> alloc 35% scroll (0.0 - 0.35)
-        // 25-35: Companies (10 frames) -> alloc 40% scroll (0.35 - 0.75)
-        // 35-39: Hero (5 frames) -> alloc 25% scroll (0.75 - 1.0)
+        // Total frames = 41
+        // 0-26: Competition (26 frames) -> alloc 35% scroll (0.0 - 0.35)
+        // 26-36: Companies (10 frames) -> alloc 40% scroll (0.35 - 0.75)
+        // 36-40: Hero (5 frames) -> alloc 25% scroll (0.75 - 1.0)
 
         if (scrollProgress < 0.35) {
-            // Range 0 to 0.35 maps to 0 to 25
-            frameIndex = (scrollProgress / 0.35) * 25
+            // Range 0 to 0.35 maps to 0 to 26
+            frameIndex = (scrollProgress / 0.35) * 26
         } else if (scrollProgress < 0.75) {
-            // Range 0.35 to 0.75 maps to 25 to 35
-            frameIndex = 25 + ((scrollProgress - 0.35) / 0.4) * 10
+            // Range 0.35 to 0.75 maps to 26 to 36
+            frameIndex = 26 + ((scrollProgress - 0.35) / 0.4) * 10
         } else {
-            // Range 0.75 to 1.0 maps to 35 to 40
-            frameIndex = 35 + ((scrollProgress - 0.75) / 0.25) * 5
+            // Range 0.75 to 1.0 maps to 36 to 41
+            frameIndex = 36 + ((scrollProgress - 0.75) / 0.25) * 5
         }
 
         return Math.min(
@@ -76,8 +76,8 @@ function ScrollySection({ scrollProgress }) {
 
     // Determine which phase we're in
     const phase = useMemo(() => {
-        if (currentFrame < 25) return 'competition'
-        if (currentFrame < 35) return 'companies'
+        if (currentFrame < 26) return 'competition'
+        if (currentFrame < 36) return 'companies'
         return 'hero'
     }, [currentFrame])
 
@@ -87,7 +87,6 @@ function ScrollySection({ scrollProgress }) {
     }, [currentFrame])
 
     // Calculate which brand to show (0-2)
-    // Frame 25 is a transition frame with no overlay
     const currentBrand = useMemo(() => {
         if (currentFrame < 26) return -1
         if (currentFrame < 29) return 0
