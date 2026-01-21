@@ -53,19 +53,19 @@ function ScrollySection({ scrollProgress }) {
         let frameIndex = 0
 
         // Total frames = 40
-        // 0-25: Competition (25 frames) -> alloc 30% scroll (0.0 - 0.3)
-        // 25-35: Companies (10 frames) -> alloc 60% scroll (0.3 - 0.9) - SUPER SLOW
-        // 35-39: Hero (5 frames) -> alloc 10% scroll (0.9 - 1.0)
+        // 0-25: Competition (25 frames) -> alloc 35% scroll (0.0 - 0.35)
+        // 25-35: Companies (10 frames) -> alloc 40% scroll (0.35 - 0.75)
+        // 35-39: Hero (5 frames) -> alloc 25% scroll (0.75 - 1.0)
 
-        if (scrollProgress < 0.3) {
-            // Range 0 to 0.3 maps to 0 to 25
-            frameIndex = (scrollProgress / 0.3) * 25
-        } else if (scrollProgress < 0.9) {
-            // Range 0.3 to 0.9 maps to 25 to 35
-            frameIndex = 25 + ((scrollProgress - 0.3) / 0.6) * 10
+        if (scrollProgress < 0.35) {
+            // Range 0 to 0.35 maps to 0 to 25
+            frameIndex = (scrollProgress / 0.35) * 25
+        } else if (scrollProgress < 0.75) {
+            // Range 0.35 to 0.75 maps to 25 to 35
+            frameIndex = 25 + ((scrollProgress - 0.35) / 0.4) * 10
         } else {
-            // Range 0.9 to 1.0 maps to 35 to 40
-            frameIndex = 35 + ((scrollProgress - 0.9) / 0.1) * 5
+            // Range 0.75 to 1.0 maps to 35 to 40
+            frameIndex = 35 + ((scrollProgress - 0.75) / 0.25) * 5
         }
 
         return Math.min(
