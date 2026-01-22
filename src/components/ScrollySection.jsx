@@ -87,13 +87,14 @@ function ScrollySection({ scrollProgress }) {
         return getCompetitionMessage(currentFrame)
     }, [currentFrame])
 
-    // Calculate which brand to show (0-2)
+    // Calculate which brand to show (0-3)
     const currentBrand = useMemo(() => {
-        if (currentFrame < 25) return -1
+        if (currentFrame < 26) return -1
         if (currentFrame < 28) return 0  // adelev8
-        if (currentFrame < 31) return 1  // Maninfini
-        if (currentFrame < 35) return 2  // sarojjain
-        return 3
+        if (currentFrame < 30) return 1  // Maninfini
+        if (currentFrame < 33) return 2  // sarojjain
+        if (currentFrame < 36) return 3  // Quantiti
+        return 4
     }, [currentFrame])
 
     // Keep track of current frame in ref for resize handler

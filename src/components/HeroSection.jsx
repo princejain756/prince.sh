@@ -158,6 +158,10 @@ function HeroSection() {
                     <img src="/sarojjain.png" alt="Saroj Jain logo" width="360" height="79" className="footer-brand-logo" decoding="async" />
                     <span>sarojjain.com</span>
                 </a>
+                <a href="https://quantiti.in" target="_blank" rel="noopener noreferrer" className="footer-brand-link">
+                    <img src="/quantitilogo.webp" alt="Quantiti logo" width="400" height="400" className="footer-brand-logo" decoding="async" />
+                    <span>quantiti.in</span>
+                </a>
             </motion.div>
         </div>
     )

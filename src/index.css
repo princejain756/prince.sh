@@ -714,3 +714,44 @@ html.lenis body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   Image Download Protection
+   ========================================== */
+
+/* Prevent image dragging and selection */
+img,
+canvas,
+.frame-canvas,
+.scrolly-sticky,
+.brand-logo,
+.brand-logo-large,
+.footer-brand-logo {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Re-enable pointer events for links containing images */
+a img,
+.footer-brand-link img {
+  pointer-events: auto;
+}
+
+/* Disable context menu visually (backup for JS) */
+.scrolly-container,
+.scrolly-sticky {
+  -webkit-touch-callout: none;
+}
+
+/* Protect all images from being saved on mobile */
+img {
+  -webkit-touch-callout: none;
+}

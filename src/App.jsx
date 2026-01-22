@@ -2,10 +2,14 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import ScrollySection from './components/ScrollySection'
 import AutoScrollToggle from './components/AutoScrollToggle'
+import useImageProtection from './hooks/useImageProtection'
 import Lenis from 'lenis'
 import './App.css'
 
 function App() {
+  // Enable image download protection
+  useImageProtection()
+
   const [scrollProgress, setScrollProgress] = useState(0)
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(false)
   const lenisRef = useRef(null)

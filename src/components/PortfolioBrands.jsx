@@ -25,6 +25,14 @@ const brands = [
         alt: 'Saroj Jain logo',
         description: "Ethnic fashion label blending traditional Indian craftsmanship with contemporary silhouettes for modern celebrations."
     },
+    {
+        name: 'Quantiti',
+        logo: '/quantitilogo.webp',
+        logoWidth: 400,
+        logoHeight: 400,
+        alt: 'Quantiti logo',
+        description: "Quantitative intelligence engine combining AI/ML models with classical quant finance for trading signals, risk analytics, and portfolio optimization. Not providing financial or investment advice."
+    },
 ]
 
 function PortfolioBrands({ currentBrand }) {
